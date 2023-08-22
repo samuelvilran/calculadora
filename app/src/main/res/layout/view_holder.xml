@@ -18,13 +18,23 @@
         android:id="@+id/num1View"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="72dp"
+        android:layout_marginStart="30dp"
         android:layout_marginTop="30dp"
-        android:layout_marginEnd="100dp"
+        android:layout_marginEnd="30dp"
         android:layout_marginBottom="50dp"
         android:text="num1" />
 
-    <TextView
+        <TextView
+            android:id="@+id/operator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="30dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="50dp"
+            android:text="signo" />
+
+        <TextView
         android:id="@+id/num2View"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -42,7 +52,9 @@
             android:layout_marginBottom="50dp"
             android:layout_marginEnd="10dp"
             android:layout_marginLeft="50dp"
-            android:text="res" />
+            android:text="respuesta" />
+
+
 
     </LinearLayout>
 </androidx.cardview.widget.CardView>

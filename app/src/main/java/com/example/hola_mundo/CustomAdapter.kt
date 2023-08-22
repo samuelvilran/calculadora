@@ -8,44 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 
 
 
-
-    /*clase para el viewholder
-inner class ViewHolder(dataView: View, itemView: View) : RecyclerView.ViewHolder(itemView) {
-
-
-    var resView: TextView = dataView.findViewById(R.id.txtRes)
-    var num1View: TextView = dataView.findViewById(R.id.num1)
-    var num2View: TextView = dataView.findViewById(R.id.num2)
-}
-
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        //Crear la view y enviarla
-                 var view = LayoutInflater.from(parent.context).inflate(R.layout.adapter,parent,false)
-            return ViewHolder(view)
-    }
-
-    override fun getItemCount(): Int {
-        return mlist.size
-
-    }
-
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-
-
-
-        var dataModel = mlist[position]
-
-        //holder.textView.text = dataModel.text
-    }
-}
-*/
-
-
-
-
-
-class CustomAdapter(private val dataSet: MutableList<MathOperation>) : RecyclerView.Adapter<CustomAdapter.ViewHolder>() {
+class CustomAdapter(private val operationSet: MutableList<Operation>) : RecyclerView.Adapter<CustomAdapter.ViewHolder>() {
 
 
     /**
@@ -54,16 +17,23 @@ class CustomAdapter(private val dataSet: MutableList<MathOperation>) : RecyclerV
      */
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val textView: TextView
+        var textView: TextView
+        var respView : TextView
+        var cant1View : TextView
+        var cant2View : TextView
 
         init {
             // Define click listener for the ViewHolder's View.
-            textView = view.findViewById(R.id.num1View)
+            cant1View = view.findViewById(R.id.num1View)
+            cant2View = view.findViewById(R.id.num2View)
+            respView = view.findViewById(R.id.respView)
+            textView = view.findViewById(R.id.operator)
+
 
         }
     }
 
-    override fun getItemCount() = dataSet.size
+    override fun getItemCount() = operationSet.size
 
 
     // Create new views (invoked by the layout manager)
@@ -79,8 +49,12 @@ class CustomAdapter(private val dataSet: MutableList<MathOperation>) : RecyclerV
 
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
-        viewHolder.textView.text =  dataSet[position].operationType
-    }
+        viewHolder.textView.text =  operationSet[position].operator.toString()
+        viewHolder.textView.text =  operationSet[position].resp.toString()
+        viewHolder.cant2View.text = operationSet[position].cant2.toString()
+        viewHolder.cant1View.text = operationSet[position].cant1.toString()
+
+                }
 
 
 
