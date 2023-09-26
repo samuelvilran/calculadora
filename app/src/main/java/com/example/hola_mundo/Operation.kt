@@ -1,6 +1,7 @@
 package com.example.hola_mundo
 
 import java.math.RoundingMode
+import java.util.Date
 import kotlin.math.sqrt
 
 
@@ -16,6 +17,9 @@ enum class Operations(var simbolo: String) {
 
 data class Operation(
     var operator: String, var cant1: Double, var cant2: Double, var resp: Double) {
+
+    var dispositivo: String? = "Android"
+    var timestamp: String? = Date().toString()
     fun calcular() : Double {
         var res = 0.0
         when (operator) {
@@ -29,5 +33,6 @@ data class Operation(
         resp = res
         return res
     }
+
 }
 

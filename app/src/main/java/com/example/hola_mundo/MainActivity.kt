@@ -11,6 +11,15 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.hola_mundo.databinding.ActivityMainBinding
 import java.math.RoundingMode
+import org.json.JSONObject
+import java.io.BufferedReader
+import java.io.InputStreamReader
+import java.net.HttpURLConnection
+import java.net.URL
+import java.net.URLEncoder
+import kotlinx.serialization.*
+import kotlinx.serialization.json.*
+
 
 
 
@@ -55,11 +64,57 @@ class MainActivity : AppCompatActivity() {
             var nuevaOperacion = Operation(btn.text.toString(), num1, num2, 0.0)
             var res = nuevaOperacion.calcular()
             txtRes.setText(" =   ${res}")
-            mathOps.add(nuevaOperacion)
-            adapter.notifyDataSetChanged()
+            //mathOps.add(nuevaOperacion)
+            //adapter.notifyDataSetChanged()
+            println("will send to server")
+            post(nuevaOperacion,"http://192.168.68.102:5132/api/Operacion")
 
         }
 
+
+
+                fun post(params: Operation, REQUEST_URL: String): JSONObject? {
+                    var jsonObject: JSONObject? = null
+                    var reader: BufferedReader? = null
+
+                    try {
+                        val url = URL(REQUEST_URL)
+                        val postData =  Json.encodeToString(params)
+
+                        val postDataBytes = postData.toString().toByteArray(charset("UTF-8"))
+                        val connection = url.openConnection() as HttpURLConnection
+
+                        connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded")
+                        connection.connectTimeout = 8000
+                        connection.requestMethod = "POST"
+                        connection.useCaches = false
+                        connection.doOutput = true
+                        connection.outputStream.write(postDataBytes)
+                        connection.connect()
+
+                        val sb = StringBuilder()
+                        val statusCode = connection.responseCode
+
+                        if (statusCode == 200) {
+                            reader = BufferedReader(InputStreamReader(connection.inputStream))
+                            var line: String?
+
+                            while (reader.readLine().also { line = it } != null) {
+                                sb.append(line)
+                            }
+
+                            jsonObject = JSONObject(sb.toString())
+                        }
+
+                        connection.disconnect()
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    } finally {
+                        reader?.close()
+                    }
+
+                    return jsonObject
+                }
 
 
 
